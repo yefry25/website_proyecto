@@ -1,168 +1,102 @@
-import { Component, AfterViewInit, ViewChild, QueryList } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
+
+interface TrashItem {
+  id: number;
+  type: 'organic' | 'plastic' | 'paper';
+  icon: string;
+  name: string;
+  visible: boolean;
+}
 
 @Component({
   selector: 'app-video-game',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './video-game.component.html',
   styleUrl: './video-game.component.scss'
 })
-export class VideoGameComponent implements AfterViewInit {
+export class VideoGameComponent {
 
-  @ViewChild('score') scoreElement!: HTMLElement;
-  @ViewChild('timer') timerElement!: HTMLElement;
-  @ViewChild('startButton') startButton!: HTMLElement;
-  @ViewChild('trashItem') trashItem!: QueryList<HTMLElement>;
-  @ViewChild('bin') bin!: QueryList<HTMLElement>;
+  public isGameActive = false;
+  public score = 0;
+  public timeLeft = 60;
+  private timerInterval: any;
+  public draggedItem: TrashItem | null = null;
 
-  constructor() {
+  public trashItems: TrashItem[] = [
+    { id: 1, type: 'organic', icon: '🍎', name: 'Manzana', visible: true },
+    { id: 2, type: 'plastic', icon: '🧴', name: 'Botella', visible: true },
+    { id: 3, type: 'paper', icon: '📰', name: 'Periódico', visible: true },
+    { id: 4, type: 'organic', icon: '🍌', name: 'Plátano', visible: true },
+    { id: 5, type: 'plastic', icon: '🥤', name: 'Vaso', visible: true },
+    { id: 6, type: 'paper', icon: '📦', name: 'Caja', visible: true },
+  ];
 
+  public startGame(): void {
+    if (this.isGameActive) {
+      this.resetGame();
+      return;
+    }
+
+    this.isGameActive = true;
+    this.score = 0;
+    this.timeLeft = 60;
+
+    // Muestra todos los ítems
+    this.trashItems.forEach(item => (item.visible = true));
+
+    // Inicia temporizador
+    this.timerInterval = setInterval(() => {
+      this.timeLeft--;
+
+      if (this.timeLeft <= 0) {
+        this.endGame();
+      }
+    }, 1000);
   }
 
-  ngAfterViewInit(): void {
-    // Elementos del juego
-    const trashItems = this.trashItem;
-    const bins = this.bin;
-    const scoreElement = this.scoreElement;
-    const timerElement = this.timerElement;
-    const startButton = this.startButton;
+  // Termina el juego
+  private endGame(): void {
+    clearInterval(this.timerInterval);
+    this.isGameActive = false;
+  }
 
-    // Variables del juego
-    let score = 0;
-    let timeLeft = 60;
-    let timerInterval: any;
-    let isGameActive = false;
+  // Reinicia el juego
+  private resetGame(): void {
+    clearInterval(this.timerInterval);
+    this.isGameActive = false;
+    this.trashItems.forEach(item => (item.visible = true));
+  }
 
-    // Inicializar elementos arrastrables
-    trashItems.forEach(item => {
-      item.setAttribute('draggable', 'true');
+  // Drag start
+  public onDragStart(event: DragEvent, item: TrashItem): void {
+    if (!this.isGameActive) return;
+    this.draggedItem = item;
+    if (event.dataTransfer) {
+      event.dataTransfer.setData('text/plain', item.type);
+    }
+  }
 
-      item.addEventListener('dragstart', function (e: DragEvent) {
-        if (!isGameActive) return;
-        if (e.dataTransfer) {
-          e.dataTransfer.setData('text/plain', item.getAttribute('data-type') || '');
-          setTimeout(() => {
-            item.style.opacity = '0.5';
-          }, 0);
-        }
-      });
+  // Drop
+  public onDrop(event: DragEvent, binType: 'organic' | 'plastic' | 'paper'): void {
+    if (!this.isGameActive || !this.draggedItem) return;
+    event.preventDefault();
 
-      item.addEventListener('dragend', function () {
-        item.style.opacity = '1';
-      });
-    });
+    const trashType = this.draggedItem.type;
 
-    // Configurar contenedores como destinos de arrastre
-    bins.forEach(bin => {
-      bin.addEventListener('dragover', function (e) {
-        if (!isGameActive) return;
-        e.preventDefault();
-        bin.style.transform = 'scale(1.05)';
-      });
-
-      bin.addEventListener('dragleave', function () {
-        bin.style.transform = 'scale(1)';
-      });
-
-      bin.addEventListener('drop', function (e: DragEvent) {
-        if (!isGameActive) return;
-        e.preventDefault();
-        bin.style.transform = 'scale(1)';
-
-        if (!e.dataTransfer) return;
-        const trashType = e.dataTransfer.getData('text/plain');
-        const binType = bin.classList.contains('bin-organic') ? 'organic' :
-          bin.classList.contains('bin-plastic') ? 'plastic' : 'paper';
-
-        // Encontrar el elemento que se está arrastrando
-        const draggedItem = document.querySelector('.trash-item[style*="opacity: 0.5"]') as HTMLElement;
-
-        if (draggedItem) {
-          if (trashType === binType) {
-            // Clasificación correcta
-            score += 10;
-            scoreElement.textContent = score.toString();
-            draggedItem.classList.add('correct');
-
-            // Ocultar el elemento después de un tiempo
-            setTimeout(() => {
-              draggedItem.style.visibility = 'hidden';
-            }, 500);
-          } else {
-            // Clasificación incorrecta
-            draggedItem.classList.add('incorrect');
-            setTimeout(() => {
-              draggedItem.classList.remove('incorrect');
-            }, 500);
-          }
-        }
-      });
-    });
-
-    // Iniciar juego
-    startButton.addEventListener('click', function () {
-      if (isGameActive) {
-        resetGame();
-        return;
-      }
-
-      isGameActive = true;
-      score = 0;
-      timeLeft = 60;
-      scoreElement.textContent = score.toString();
-      timerElement.textContent = timeLeft.toString();
-
-      startButton.textContent = 'Reiniciar Juego';
-
-      // Mostrar todos los elementos de basura
-      trashItems.forEach(item => {
-        item.style.visibility = 'visible';
-        item.classList.remove('correct', 'incorrect');
-      });
-
-      // Iniciar temporizador
-      timerInterval = setInterval(() => {
-        timeLeft--;
-        timerElement.textContent = timeLeft.toString();
-
-        if (timeLeft <= 0) {
-          endGame();
-        }
-      }, 1000);
-    });
-
-    // Finalizar juego
-    function endGame() {
-      clearInterval(timerInterval);
-      isGameActive = false;
-
-      // Crear mensaje de fin de juego
-      const gameOverDiv = document.createElement('div');
-      gameOverDiv.className = 'game-over';
-      gameOverDiv.innerHTML = `
-                    <h2>¡Tiempo Agotado!</h2>
-                    <p>Tu puntuación final: ${score}</p>
-                    <button onclick="this.parentElement.remove(); document.querySelector('.overlay').remove();">Cerrar</button>
-                `;
-
-      const overlay = document.createElement('div');
-      overlay.className = 'overlay';
-
-      document.body.appendChild(overlay);
-      document.body.appendChild(gameOverDiv);
+    if (trashType === binType) {
+      this.score += 10;
+      this.draggedItem.visible = false; // Oculta el item al clasificar
+    } else {
+      // Penalización por error
+      this.score = Math.max(0, this.score - 5);
     }
 
-    // Reiniciar juego
-    function resetGame() {
-      clearInterval(timerInterval);
-      isGameActive = false; 
-      startButton.textContent = 'Comenzar Juego';
+    this.draggedItem = null;
+  }
 
-      // Mostrar todos los elementos de basura
-      trashItems.forEach(item => {
-        item.style.visibility = 'visible';
-        item.classList.remove('correct', 'incorrect');
-      });
-    }
-  };
+  public onDragOver(event: DragEvent): void {
+    if (this.isGameActive) event.preventDefault();
+  }
 }

@@ -6,51 +6,37 @@
             según su tipo. Gana puntos por cada clasificación correcta.</p>
     </div>
 
-    <div class="score-board">
-        <div class="score">Puntuación: <span #score id="score">0</span></div>
-        <div class="timer">Tiempo: <span #timer id="timer">60</span>s</div>
-    </div>
+    <div class="game">
+        <button (click)="startGame()">
+            {{ isGameActive ? 'Finalizar Juego' : 'Comenzar Juego' }}
+        </button>
 
-    <div class="bins-container">
-        <div #bin class="bin bin-organic">
-            <div class="bin-label">Orgánico</div>
+        <div class="hud">
+            <span>Puntaje: {{ score }}</span>
+            <span>Tiempo: {{ timeLeft }}</span>
         </div>
-        <div #bin class="bin bin-plastic">
-            <div class="bin-label">Plástico</div>
-        </div>
-        <div #bin class="bin bin-paper">
-            <div class="bin-label">Papel</div>
-        </div>
-    </div>
 
-    <div class="trash-items">
-        <div #trashItem class="trash-item" data-type="organic" style="background-color: #a3cb38;">
-            🍎
-            <div class="trash-name">Manzana</div>
+        <div class="trash-items">
+            <div *ngFor="let item of trashItems" class="trash-item" [class.hidden]="!item.visible"
+                [attr.data-type]="item.type" draggable="true" (dragstart)="onDragStart($event, item)">
+                {{ item.icon }}
+                <div class="trash-name">{{ item.name }}</div>
+            </div>
         </div>
-        <div #trashItem class="trash-item" data-type="plastic" style="background-color: #3498db;">
-            🧴
-            <div class="trash-name">Botella</div>
-        </div>
-        <div #trashItem class="trash-item" data-type="paper" style="background-color: #f1c40f;">
-            📰
-            <div class="trash-name">Periódico</div>
-        </div>
-        <div #trashItem class="trash-item" data-type="organic" style="background-color: #a3cb38;">
-            🍌
-            <div class="trash-name">Plátano</div>
-        </div>
-        <div #trashItem class="trash-item" data-type="plastic" style="background-color: #3498db;">
-            🥤
-            <div class="trash-name">Vaso</div>
-        </div>
-        <div #trashItem class="trash-item" data-type="paper" style="background-color: #f1c40f;">
-            📦
-            <div class="trash-name">Caja</div>
+
+        <div class="bins-container">
+            <div class="bin bin-organic" (dragover)="onDragOver($event)" (drop)="onDrop($event, 'organic')">
+                <div class="bin-label">Orgánico</div>
+            </div>
+
+            <div class="bin bin-plastic" (dragover)="onDragOver($event)" (drop)="onDrop($event, 'plastic')">
+                <div class="bin-label">Plástico</div>
+            </div>
+
+            <div class="bin bin-paper" (dragover)="onDragOver($event)" (drop)="onDrop($event, 'paper')">
+                <div class="bin-label">Papel</div>
+            </div>
         </div>
     </div>
 
-    <div class="controls">
-        <button #startButton id="startButton">Comenzar Juego</button>
-    </div>
 </div>

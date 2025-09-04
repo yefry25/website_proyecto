@@ -5,13 +5,14 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-body {
-    background: linear-gradient(135deg, #6a89cc, #4a69bd);
-    min-height: 100vh;
-    padding: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.trash-item.hidden {
+  display: none;
+}
+.bin {
+  border: 2px dashed gray;
+  padding: 20px;
+  margin: 10px;
+  min-width: 100px;
 }
 
 .game-container {
@@ -231,4 +232,14 @@ button:hover {
         max-width: 250px;
         margin-bottom: 20px;
     }
+}
+
+.active {
+    transition: transform 0.2s ease;
+    transform: scale(1.05);
+}
+
+.dragging {
+    transition: transform 0.2s ease;
+    opacity: 0.5;
 }
