@@ -8,12 +8,6 @@
 .trash-item.hidden {
   display: none;
 }
-.bin {
-  border: 2px dashed gray;
-  padding: 20px;
-  margin: 10px;
-  min-width: 100px;
-}
 
 .game-container {
     background-color: rgba(255, 255, 255, 0.9);
@@ -60,7 +54,7 @@ h1 {
 
 .bin {
     width: 180px;
-    height: 220px;
+    height: 350px;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
@@ -77,22 +71,10 @@ h1 {
     transform: translateY(-5px);
 }
 
-.bin-organic {
-    background: linear-gradient(to bottom, #27ae60, #219a52);
-}
-
-.bin-plastic {
-    background: linear-gradient(to bottom, #3498db, #2980b9);
-}
-
-.bin-paper {
-    background: linear-gradient(to bottom, #f1c40f, #f39c12);
-}
-
 .bin-label {
     background-color: rgba(255, 255, 255, 0.9);
     width: 100%;
-    padding: 10px;
+    padding: 3px;
     text-align: center;
     font-weight: bold;
     color: #2c3e50;
@@ -124,15 +106,6 @@ h1 {
 .trash-item:hover {
     transform: scale(1.1);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-}
-
-.trash-item.correct {
-    background-color: #2ecc71 !important;
-}
-
-.trash-item.incorrect {
-    background-color: #e74c3c !important;
-    animation: shake 0.5s;
 }
 
 @keyframes shake {
@@ -186,31 +159,6 @@ button:hover {
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
 }
 
-.game-over {
-    background-color: rgba(255, 255, 255, 0.95);
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-    text-align: center;
-    z-index: 100;
-    width: 80%;
-    max-width: 500px;
-}
-
-.game-over h2 {
-    color: #2c3e50;
-    margin-bottom: 20px;
-}
-
-.game-over p {
-    font-size: 1.2rem;
-    margin-bottom: 25px;
-}
-
 .overlay {
     position: fixed;
     top: 0;
@@ -232,14 +180,4 @@ button:hover {
         max-width: 250px;
         margin-bottom: 20px;
     }
-}
-
-.active {
-    transition: transform 0.2s ease;
-    transform: scale(1.05);
-}
-
-.dragging {
-    transition: transform 0.2s ease;
-    opacity: 0.5;
 }

@@ -75,6 +75,12 @@ export class VideoGameComponent {
     { id: 6, type: 'paper', icon: '📦', name: 'Caja', visible: true, state: 'default' },
   ];
 
+  public bins : any[] =[
+    {type: 'organic', label: 'residuos orgánicos aprovechables', img: 'assets/bins/green-bin.png'},
+    {type: 'plastic', label: 'residuos aprovechables', img: 'assets/bins/white-bin.png'},
+    {type: 'paper', label: 'residuos no aprovechables', img: 'assets/bins/black-bin.png'}
+  ]
+
   ngOnDestroy() {
     clearInterval(this.timerInterval);
   }
@@ -136,7 +142,6 @@ export class VideoGameComponent {
     if (trashType === binType) {
       this.score += 10;
       this.draggedItem.state = 'correct';
-      //this.draggedItem.visible = false; // Oculta el item al clasificar
     } else {
       // Penalización por error
       this.draggedItem.state = 'incorrect';

@@ -3,7 +3,8 @@
 
     <div class="instructions">
         <p>¡Bienvenido al juego de clasificación de basura! Arrastra cada elemento de basura al contenedor correcto
-            según su tipo. Gana puntos por cada clasificación correcta.</p>
+            según su tipo. Gana puntos por cada clasificación correcta.
+        </p>
     </div>
 
     <div class="game">
@@ -11,7 +12,7 @@
             {{ isGameActive ? 'Finalizar Juego' : 'Comenzar Juego' }}
         </button>
 
-        <div class="hud">
+        <div class="hud score-board">
             <span>Puntaje: {{ score }}</span>
             <span>Tiempo: {{ timeLeft }}</span>
         </div>
@@ -25,40 +26,11 @@
         </div>
 
         <div class="bins-container">
-            <div class="bin bin-organic" (dragover)="onDragOver($event)" (drop)="onDrop($event, 'organic')">
-                <div class="bin-label">Orgánico</div>
-            </div>
-
-            <div class="bin bin-plastic" (dragover)="onDragOver($event)" (drop)="onDrop($event, 'plastic')">
-                <div class="bin-label">Plástico</div>
-            </div>
-
-            <div class="bin bin-paper" (dragover)="onDragOver($event)" (drop)="onDrop($event, 'paper')">
-                <div class="bin-label">Papel</div>
-            </div>
+            <div *ngFor="let bin of bins" class="bin" (dragover)="onDragOver($event)" (drop)="onDrop($event, bin.type)">
+                <img [src]="bin.img" [alt]="bin.label" class="bin-img">
+                <!-- <div class="bin-label">{{bin.label}}</div> -->
+            </div> 
         </div>
-
-        <!-- <div class="trash-items">
-            <div class="trash-item" *ngFor="let item of trashItems" [@trashAnimation]="item.state" draggable="true"
-                (dragstart)="startDrag(item)" (dragend)="endDrag(item)">
-                {{ item.icon }}
-                <div class="trash-name">{{ item.name }}</div>
-            </div>
-        </div>
-
-        <div class="bins-container">
-            <div class="bin bin-organic" (drop)="dropItem($event, 'organic')" (dragover)="$event.preventDefault()">
-                <div class="bin-label">Orgánico</div>
-            </div>
-            <div class="bin bin-plastic" (drop)="dropItem($event, 'plastic')" (dragover)="$event.preventDefault()">
-                <div class="bin-label">Plástico</div>
-            </div>
-            <div class="bin bin-paper" (drop)="dropItem($event, 'paper')" (dragover)="$event.preventDefault()">
-                <div class="bin-label">Papel</div>
-            </div>
-        </div> -->
-
 
     </div>
-
 </div>
