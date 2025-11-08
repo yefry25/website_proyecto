@@ -1,3 +1,70 @@
+<section class="educacion-ambiental">
+    <h1>Educación Ambiental</h1>
+    <h2>Causas y consecuencias de la contaminación</h2>
+
+    <p>
+        La contaminación ambiental es el resultado directo de las acciones humanas. Sus efectos afectan tanto la salud
+        de las personas como el equilibrio del entorno natural.
+    </p>
+    <p>
+        En los seres humanos puede generar <strong>problemas respiratorios, cardiovasculares, inmunológicos, hormonales
+            y reproductivos</strong>, además de incrementar el riesgo de <strong>cáncer</strong>.
+    </p>
+    <p>
+        En el ambiente, la contaminación debilita la capa de ozono y altera los ecosistemas, afectando tanto a la fauna
+        como a la flora.
+    </p>
+
+    <ul>
+        <li><strong>Fauna:</strong> mortalidad de peces, bioacumulación de tóxicos, intoxicación de mascotas y animales
+            silvestres.</li>
+        <li><strong>Flora:</strong> reducción de biodiversidad vegetal, disminución de fotosíntesis y alteración del
+            ciclo de nutrientes.</li>
+    </ul>
+
+    <blockquote>Fuente: Moretti Villegas & Valiente Saldaña, 2023.</blockquote>
+
+    <h2>Fuentes de contaminación en el municipio</h2>
+    <p>
+        La principal causa de contaminación proviene de las acciones cotidianas de los habitantes y visitantes. La
+        acumulación inadecuada de residuos sólidos en zonas urbanas o educativas afecta el ambiente y la salud.
+    </p>
+
+    <h2>Cómo evitar la contaminación y clasificar los residuos</h2>
+
+    <table class="tabla-residuos">
+        <thead>
+            <tr>
+                <th>Color del recipiente</th>
+                <th>Tipo de residuo</th>
+                <th>Ejemplos</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>🟩 Verde</td>
+                <td>Residuos orgánicos aprovechables</td>
+                <td>Restos de comida, cáscaras, hojas, ramas</td>
+            </tr>
+            <tr>
+                <td>⚪ Blanco</td>
+                <td>Residuos aprovechables</td>
+                <td>Plástico, vidrio, metales, cartón, papel</td>
+            </tr>
+            <tr>
+                <td>⚫ Negro</td>
+                <td>Residuos no aprovechables</td>
+                <td>Papel higiénico, servilletas, empaques contaminados</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p class="mensaje-final">
+        🌱 Cuidar el ambiente empieza con nuestras acciones diarias. Cada pequeño cambio cuenta.
+    </p>
+</section>
+
+
 <div class="game-container">
     <h1>♻️ Clasificación de Basura</h1>
 
@@ -20,7 +87,7 @@
         <div class="trash-items">
             <div *ngFor="let item of trashItems" class="trash-item" [@trashAnimation]="item.state"
                 [attr.data-type]="item.type" draggable="true" (dragstart)="onDragStart($event, item)">
-                {{ item.icon }}
+                <img [src]="item.img" [alt]="item.name" class="trash-img">
                 <div class="trash-name">{{ item.name }}</div>
             </div>
         </div>
@@ -28,9 +95,7 @@
         <div class="bins-container">
             <div *ngFor="let bin of bins" class="bin" (dragover)="onDragOver($event)" (drop)="onDrop($event, bin.type)">
                 <img [src]="bin.img" [alt]="bin.label" class="bin-img">
-                <!-- <div class="bin-label">{{bin.label}}</div> -->
-            </div> 
+            </div>
         </div>
-
     </div>
 </div>

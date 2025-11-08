@@ -5,7 +5,7 @@ import { trigger, state, style, transition, animate, keyframes, AnimationEvent }
 interface TrashItem {
   id: number;
   type: 'organic' | 'plastic' | 'paper';
-  icon: string;
+  img: string;
   name: string;
   visible: boolean;
   state: 'default' | 'dragging' | 'incorrect' | 'correct';
@@ -66,15 +66,43 @@ export class VideoGameComponent {
   private timerInterval: any;
   public draggedItem: TrashItem | null = null;
 
-  public trashItems: TrashItem[] = [
-    { id: 1, type: 'organic', icon: '🍎', name: 'Manzana', visible: true, state: 'default' },
-    { id: 2, type: 'plastic', icon: '🧴', name: 'Botella', visible: true, state: 'default' },
-    { id: 3, type: 'paper', icon: '📰', name: 'Periódico', visible: true, state: 'default' },
-    { id: 4, type: 'organic', icon: '🍌', name: 'Plátano', visible: true, state: 'default' },
-    { id: 5, type: 'plastic', icon: '🥤', name: 'Vaso', visible: true, state: 'default' },
-    { id: 6, type: 'paper', icon: '📦', name: 'Caja', visible: true, state: 'default' },
-  ];
+  // public trashItems: TrashItem[] = [
+  //   { id: 1, type: 'organic', icon: '🍎', name: 'Manzana', visible: true, state: 'default' },
+  //   { id: 2, type: 'plastic', icon: '🧴', name: 'Botella', visible: true, state: 'default' },
+  //   { id: 3, type: 'paper', icon: '📰', name: 'Periódico', visible: true, state: 'default' },
+  //   { id: 4, type: 'organic', icon: '🍌', name: 'Plátano', visible: true, state: 'default' },
+  //   { id: 5, type: 'plastic', icon: '🥤', name: 'Vaso', visible: true, state: 'default' },
+  //   { id: 6, type: 'paper', icon: '📦', name: 'Caja', visible: true, state: 'default' },
+  // ];
 
+  public trashItems: TrashItem[] = [
+    // 🟢 Orgánicos
+    { id: 1, type: 'organic', img: 'assets/trash/apple-core.jpg', name: 'Cáscara de manzana', visible: true, state: 'default' },
+    { id: 2, type: 'organic', img: 'assets/trash/banana-peel.jpg', name: 'Cáscara de plátano', visible: true, state: 'default' },
+    { id: 3, type: 'organic', img: 'assets/trash/eggshells.jpg', name: 'Cáscaras de huevo', visible: true, state: 'default' },
+    { id: 4, type: 'organic', img: 'assets/trash/vegetable-peels.jpg', name: 'Cáscaras de vegetales', visible: true, state: 'default' },
+    { id: 5, type: 'organic', img: 'assets/trash/coffee-grounds.jpg', name: 'Restos de café', visible: true, state: 'default' },
+    { id: 6, type: 'organic', img: 'assets/trash/food-leftovers.jpg', name: 'Sobras de comida', visible: true, state: 'default' },
+
+    // ⚪ Plástico
+    { id: 7, type: 'plastic', img: 'assets/trash/plastic-bottle.jpg', name: 'Botella plástica', visible: true, state: 'default' },
+    { id: 8, type: 'plastic', img: 'assets/trash/plastic-bag.jpg', name: 'Bolsa plástica', visible: true, state: 'default' },
+    { id: 9, type: 'plastic', img: 'assets/trash/straw.jpg', name: 'Pitillo', visible: true, state: 'default' },
+    { id: 10, type: 'plastic', img: 'assets/trash/yogurt-cup.jpg', name: 'Vaso de yogur', visible: true, state: 'default' },
+    { id: 11, type: 'plastic', img: 'assets/trash/shampoo-bottle.jpg', name: 'Envase de champú', visible: true, state: 'default' },
+    { id: 12, type: 'plastic', img: 'assets/trash/soda-cap.jpg', name: 'Tapa de gaseosa', visible: true, state: 'default' },
+
+    // ⚫ Papel / no aprovechable
+    { id: 13, type: 'paper', img: 'assets/trash/newspaper.jpg', name: 'Periódico', visible: true, state: 'default' },
+    { id: 14, type: 'paper', img: 'assets/trash/cardboard.jpg', name: 'Cartón', visible: true, state: 'default' },
+    { id: 15, type: 'paper', img: 'assets/trash/tissue.jpg', name: 'Pañuelo usado', visible: true, state: 'default' },
+    { id: 16, type: 'paper', img: 'assets/trash/napkin.jpg', name: 'Servilleta sucia', visible: true, state: 'default' },
+    { id: 17, type: 'paper', img: 'assets/trash/paper-cup.jpg', name: 'Vaso de papel', visible: true, state: 'default' },
+    { id: 18, type: 'paper', img: 'assets/trash/pizza-box.jpg', name: 'Caja de pizza', visible: true, state: 'default' },
+    { id: 19, type: 'paper', img: 'assets/trash/magazine.jpg', name: 'Revista', visible: true, state: 'default' },
+    { id: 20, type: 'paper', img: 'assets/trash/broken-paper.jpg', name: 'Papel roto', visible: true, state: 'default' },
+  ];
+  
   public bins : any[] =[
     {type: 'organic', label: 'residuos orgánicos aprovechables', img: 'assets/bins/green-bin.png'},
     {type: 'plastic', label: 'residuos aprovechables', img: 'assets/bins/white-bin.png'},
