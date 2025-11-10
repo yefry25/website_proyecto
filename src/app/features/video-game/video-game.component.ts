@@ -164,36 +164,47 @@ export class VideoGameComponent {
     }
 
     if(this.score === 200){
+      this.startGame();
+
       Swal.fire({
         title: '¡Felicidades!',
         text: 'Has alcanzado la puntuación máxima de 200 puntos. ¡Eres un experto en clasificación de residuos!',
         icon: 'success',
         confirmButtonText: 'Cerrar',
         confirmButtonColor: '#2a7236ff'
-      }).then(() => {
-        this.startGame();
+      });
+    }
+    else if(this.trashItems.every(item => item.state === 'correct' || !item.visible)){
+      this.startGame();
+
+      Swal.fire({
+        title: '¡Juego completado!',
+        text: `Has clasificado todos los residuos con una puntuación de ${this.score} puntos. ¡Buen trabajo!`,
+        icon: 'success',
+        confirmButtonText: 'Cerrar',
+        confirmButtonColor: '#2a7236ff'
       });
     }
     else if(this.score === 0){
+      this.startGame();
+
       Swal.fire({
         title: '¡Sigue intentando!',
         text: 'Tu puntuación ha bajado a 0 puntos. ¡No te desanimes, puedes mejorar tus habilidades de clasificación de residuos!',
         icon: 'info',
         confirmButtonText: 'Cerrar',
         confirmButtonColor: '#2a7236ff'
-      }).then(() => {
-        this.startGame();
       });
     }
     else if(this.timeLeft === 0){
+      this.startGame();
+
       Swal.fire({
         title: '¡Tiempo agotado!',
         text: 'Se acabó el tiempo. ¡Intenta de nuevo!',
         icon: 'error',
         confirmButtonText: 'Cerrar',
         confirmButtonColor: '#2a7236ff'
-      }).then(() => {
-        this.startGame();
       });
     }
 
