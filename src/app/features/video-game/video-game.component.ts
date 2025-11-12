@@ -69,7 +69,7 @@ export class VideoGameComponent {
 
   public trashItems: TrashItem[] = [
     { id: 12, type: 'recyclable-waste', img: 'assets/trash/soda-cap.jpg', name: 'Tapa de gaseosa', visible: true, state: 'default' },
-    { id: 1, type: 'organic', img: 'assets/trash/apple-core.jpg', name: 'Cáscara de manzana', visible: true, state: 'default' },
+    { id: 1, type: 'organic', img: 'assets/trash/apple-core.jpg', name: 'Corazón de la manzana', visible: true, state: 'default' },
     { id: 7, type: 'recyclable-waste', img: 'assets/trash/plastic-bottle.jpg', name: 'Botella plástica', visible: true, state: 'default' },
     { id: 9, type: 'recyclable-waste', img: 'assets/trash/straw.jpg', name: 'Pitillo', visible: true, state: 'default' },
     { id: 5, type: 'organic', img: 'assets/trash/coffee-grounds.jpg', name: 'Restos de café', visible: true, state: 'default' },
